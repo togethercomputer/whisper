@@ -21,7 +21,15 @@ class FastWhisper(FastInferenceInterface):
     def dispatch_request(self, args, env) -> Dict:
         try:
             inputs = args[0]["audio_base64"]
-            audio_nparray = ffmpeg_read(base64.b64decode(inputs), 16000)
+            if inputs.startswith('data:audio/webm;'):
+                delim_index = inputs.find(';base64,')
+                if delim_index >= 0:
+                    inputs = base64.b64decode(inputs[(delim_index + 8):])
+                else:
+                    inputs = bytes(inputs, 'utf-8')
+            else:
+                inputs = base64.b64decode(inputs)
+            audio_nparray = ffmpeg_read(inputs, 16000)
             audio_tensor = torch.from_numpy(audio_nparray)
             result = self.model.transcribe(audio_nparray)
 

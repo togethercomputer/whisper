@@ -21,7 +21,7 @@ class FastWhisper(FastInferenceInterface):
     def dispatch_request(self, args, env) -> Dict:
         try:
             inputs = args[0]["audio_base64"]
-            if inputs.startswith('data:audio/webm;'):
+            if inputs.startswith('data:audio/'):
                 delim_index = inputs.find(';base64,')
                 if delim_index >= 0:
                     inputs = base64.b64decode(inputs[(delim_index + 8):])

@@ -11,7 +11,15 @@ docker run --rm --gpus all \
   -e CUDA_VISIBLE_DEVICES=$CUDA_VISIBLE_DEVICES \
   -v $PWD/.together:/home/user/.together \
   -it togethercomputer/whisper /usr/local/bin/together start \
-    --worker.model whisper --config /home/user/cfg.yaml --color
+    --color --config /home/user/cfg.yaml --worker.model whisper
+```
+
+```console
+docker run --rm --gpus device=2 \
+  -e NUM_WORKERS=auto \
+  -v $PWD/.together:/home/user/.together \
+  -it togethercomputer/whisper /usr/local/bin/together start \
+    --color --config /home/user/cfg.yaml --worker.model whisper
 ```
 
 To query model:

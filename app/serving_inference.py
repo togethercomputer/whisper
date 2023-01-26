@@ -46,7 +46,7 @@ class FastWhisper(FastInferenceInterface):
             }
 
 if __name__ == "__main__":
-    coord_url = os.environ.get("COORD_URL", "127.0.0.1")
+    coord_url = os.environ.get("COORD_URL", "localhost")
     coordinator = TogetherWeb3(
         TogetherClientOptions(reconnect=True),
         http_url=os.environ.get("COORD_HTTP_URL", f"http://{coord_url}:8092"),

@@ -1,4 +1,4 @@
-FROM 598726163780.dkr.ecr.us-west-2.amazonaws.com/node:latest AS node
+FROM 598726163780.dkr.ecr.us-west-2.amazonaws.com/together-node:latest AS together-node
 FROM nvcr.io/nvidia/pytorch:22.09-py3 as base
 
 ENV HOST docker
@@ -19,7 +19,7 @@ RUN apt-get update && apt-get install -y --no-install-recommends ffmpeg && \
   git+https://github.com/openai/whisper.git@8cf36f3508c9acd341a45eb2364239a3d81458b9 \
   together_web3 together_worker
 
-COPY --from=node /usr/local/bin/together /usr/local/bin/
+COPY --from=together-node /usr/local/bin/together-node /usr/local/bin/
 COPY local-cfg.yaml /home/user/cfg.yaml
 COPY app app
 COPY serve.sh serve.sh
